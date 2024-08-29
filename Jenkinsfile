@@ -10,7 +10,6 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh 'docker run my-flask-app python -c "import flask; import werkzeug; print(flask.__version__, werkzeug.__version__)"'
         sh 'docker run my-flask-app python -m pytest app/tests/'
       }
     }
