@@ -4,12 +4,13 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t my-flask-app .'
+        sh 'docker build --no-cache -t my-flask-app .'
         sh 'docker tag my-flask-app $DOCKER_BFLASK_IMAGE'
       }
     }
     stage('Test') {
       steps {
+        sh 'docker run my-flask-app python -c "import flask; import werkzeug; print(flask.__version__, werkzeug.__version__)"'
         sh 'docker run my-flask-app python -m pytest app/tests/'
       }
     }
